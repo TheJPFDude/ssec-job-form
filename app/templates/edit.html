@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<head>
+    <title>Edit Entry</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .container {
+        max-width: none !important;
+        width: 800px;
+    }
+    h1.style {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+    h1.secondStyle {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 2px;
+        padding-top: 0;
+    }
+    h3.style {
+        margin-top: 2px;
+        padding-top: 0;
+    }
+    h3.secondStyle {
+        margin-top: -15px;
+        margin-bottom: -10px;
+        padding-top: 0;
+    }
+    .alert {
+        background-color: #ADD8E6;
+    }
+</style>
+<body>
+{% block content %}
+<div class="container">
+    <!--Title of form, complete with logos n' stuff-->
+    <div class="container">
+        <div class="row">
+            <div class="clearfix content-heading">
+                <img src="http://imgur.com/oOQHRyQ.png" class="pull-left">
+                <img src="http://imgur.com/e833FLN.png" class="pull-right">
+                <div class="text-center">
+                    <h1 class="style">Interested in Working at </h1>
+                </div>
+                <div class="text-center">
+                    <h1 class="secondStyle">the Space Science and Engineering Center?</h1>
+                </div>
+                <div class="text-center">
+                    <h3 class="style"><small>Please leave us your contact information below</small></h3>
+                    <h3 class="secondStyle"><small>(Red-boxed items are required)</small></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="" method="post" name="index" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            <!--Code that flashes "Entry Submitted" when entry is submitted-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;
+                                </span>
+                            </button>
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!--Row of boxes for first name and last name-->
+            <div class="row"><br>
+                <div class="col-xs-4 col-xs-offset-1" style="outline: 1px solid red">
+                    First Name (required): <br>
+                    {{ form.firstName(size=30) }}
+                    {% for error in form.firstName.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-xs-4 col-xs-offset-2" style="outline: 1px solid red">
+                    Last Name (required): <br>
+                    {{ form.lastName(size=30) }}
+                    {% for error in form.lastName.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div><br>
+
+            <!--Box for email-->
+            <div class="col-xs-6 col-xs-offset-3" style="outline: 1px solid red">
+                Email (required):<br>
+                {{ form.email(size=50) }}
+                {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <!--Text for the two required questions below-->
+            <div class="container">
+                <div class="text-center">
+                    <br><br><br><br>
+                    Interested in being emailed about full or student job openings respectively?
+                </div>
+            </div>
+
+            <!--Checkboxes for the questions above-->
+            <div class="row"><br>
+                <div class="col-xs-4 col-xs-offset-2" style="outline: 1px solid red">
+                    After graduation? (required)<br>
+                    {{ form.interestGrad() }}
+                    {% for error in form.interestGrad.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-xs-4 col-xs-offset-0" style="outline: 1px solid red">
+                    While in school? (required)<br>
+                    {{ form.interestSchool() }}
+                    {% for error in form.interestSchool.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!--Dropdowns for selecting major-->
+            <div class="row"><br>
+                <div class="col-xs-4 col-xs-offset-1">
+                    Major:<br>
+                    {{ form.major }}
+                    {% for error in form.major.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-xs-4 col-xs-offset-2">
+                    Second Major:<br>
+                    {{ form.major2 }}
+                    {% for error in form.major2.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!--Text boxes to enter major if "Other" selected for major;
+            does not submit data if anything else selected for major-->
+            <div class="row"><br>
+                <div class="col-xs-5 col-xs-offset-1">
+                    If "Other" entered above, please specify:<br>
+                    {{ form.otherMajor(size=30, value="") }}
+                    {% for error in form.otherMajor.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+
+                <div class="col-xs-5 col-xs-offset-1">
+                    If "Other" entered above, please specify:<br>
+                    {{ form.otherMajor2(size=30, value="") }}
+                    {% for error in form.otherMajor2.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+            </div>
+
+            <!--Checkboxes to select the degree of the major-->
+            <div class="row"><br>
+                <div class="col-xs-4 col-xs-offset-1">
+                    First Major Degree:<br>
+                    {{ form.degree }}
+                    {% for error in form.degree.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-xs-4 col-xs-offset-2">
+                    Second Major Degree:<br>
+                    {{ form.degree2 }}
+                    {% for error in form.degree2.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!--Dropdowns to select the completion date of the major-->
+            <div class="row"><br>
+                <div class="col-xs-4 col-xs-offset-1">
+                    Completion Date for First Major:<br>
+                    {{ form.doneDate }}
+                    {% for error in form.doneDate.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+
+                <div class="col-xs-4 col-xs-offset-2">
+                    Completion Date for Second Major:<br>
+                    {{ form.doneDate2 }}
+                    {% for error in form.doneDate2.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}<br>
+                </div>
+            </div>
+
+            <!--Text field for interests and such-->
+            <br><br><div class="col-xs-10 col-xs-offset-1">Areas of Interest:<br>
+            {{ form.areasInterest(size=90) }}
+            {% for error in form.areasInterest.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br></div>
+
+            <!--Text field for any additional info-->
+            <br><br><br><div class="col-xs-10 col-xs-offset-1">Any additional information you would like to provide:<br>
+            {{ form.additionalInfo(size=90) }}
+            {% for error in form.additionalInfo.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br></div>
+
+            <br><br><br>
+            <div class="col-xs-6 col-xs-offset-1">Upload a file here (only .txt/.docx/.pdf accepted):<br>
+                {{ form.file() }}
+                {% for error in form.file.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br></div>
+
+        <br>
+        <!--Button to submit entry-->
+        <p><br><br>
+        <div class="col-xs-5 col-xs-offset-1"><input type="submit" value="Submit"></form>
+
+        <!--Button to view database (needs username/password)-->
+        <p><form action="/data"><input type="submit" value="Back to Database"></form></div>
+</div>
+{% endblock %}
+</body>

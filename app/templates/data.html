@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <title>Database</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .container {
+        max-width: none !important;
+        width: 1000px;
+    }
+</style>
+<body>
+<div class="container">
+    <h1>Database</h1>
+    <h4>To edit entries, click on the corresponding button under "ID Number"</h4>
+
+    <!--Creating the database table, first by creating categories then filling them in-->
+    <table class="table table-bordered">
+        <!--First creating the headers that when clicked, alphabetically organize the data depending on
+        the field that was clicked-->
+        <thead>
+            <tr>
+                <th><form action="/data"><input type="submit" value = "ID Number"></form></th>
+                <th><form action="/data/firstName"><input type="submit" value = "First Name"></form></th>
+                <th><form action="/data/lastName"><input type="submit" value = "Last Name"></form></th>
+                <th><form action="/data/email"><input type="submit" value = "Email"></form></th>
+                <th><form action="/data/interestGrad"><input type="submit" value = "Interest in job after Grad"></form></th>
+                <th><form action="/data/interestSchool"><input type="submit" value = "Interest in job while in school"></form></th>
+                <th><form action="/data/major"><input type="submit" value = "First Major"></form></th>
+                <th><form action="/data/degree"><input type="submit" value = "First Major Degree"></form></th>
+                <th><form action="/data/doneDate"><input type="submit" value = "First Major Grad Time"></form></th>
+                <th><form action="/data/major2"><input type="submit" value = "Second Major"></form></th>
+                <th><form action="/data/degree2"><input type="submit" value = "Second Major Degree"></form></th>
+                <th><form action="/data/doneDate2"><input type="submit" value = "Second Major Grad Time"></form></th>
+                <th><form action="/data/areasInterest"><input type="submit" value = "Areas of Interest"></form></th>
+                <th><form action="/data/additionalInfo"><input type="submit" value = "Additional Info"></form></th>
+                <th><form action="/data/fileName"><input type="submit" value = "File Name"></form></th>
+            </tr>
+        </thead>
+
+        <!--Then getting the data from WTForms and displaying it in the table-->
+        <tbody>
+            {% for user in form %}
+            <tr>
+                <td><form action="/edit/{{ user.idNumber }}" method="post"><input type="submit" value='{{ user.idNumber }}'></form></td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.interestGrad }}</td>
+                <td>{{ user.interestSchool }}</td>
+                <td>{{ user.otherMajor }}</td>
+                <td>{{ user.degree }}</td>
+                <td>{{ user.doneDate }}</td>
+                <td>{{ user.otherMajor2 }}</td>
+                <td>{{ user.degree2 }}</td>
+                <td>{{ user.doneDate2 }}</td>
+                <td>{{ user.areasInterest }}</td>
+                <td>{{ user.additionalInfo }}</td>
+                <td><form action="/upload/{{ user.fileName }}" method="get"><input type="submit" value='{{ user.fileName }}'></form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!--Button to go to screen to delete entries-->
+    <p><form action="/delete"><input type="submit" value="Delete Entry"></form></p>
+
+    <!--Button to go back to data entry screen-->
+    <p><form action="/"><input type="submit" value="Back to Home"></form></p>
+    </div>
+</body>

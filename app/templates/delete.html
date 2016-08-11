@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+    <title>Delete Entry</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .container {
+        max-width: none !important;
+        width: 800px;
+    }
+    .alert {
+        background-color: #ADD8E6;
+    }
+</style>
+<body>
+{% block content %}
+<div class="container">
+    <h1>Delete Entry</h1>
+    <form action="" method="post" name="delete">
+        {{ form.hidden_tag() }}
+        <p>
+            <!--Code that flashes "Entry Submitted" when entry is submitted-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!--Text box to enter ID number of entry to delete-->
+            Please enter ID number of entry to delete:<br>
+            {{ form.idNumber(size=40) }}
+            {% for error in form.idNumber.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+
+    <!--Button for submitting deletion request-->
+    <br><input type="submit" value="Enter"></p></form>
+
+    <!--Button to go back to database-->
+    <p><form action="/data"><input type="submit" value="Back to Database"></form></p>
+{% endblock %}
+</div>
+</body>
